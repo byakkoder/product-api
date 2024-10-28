@@ -10,15 +10,15 @@ namespace Byakkoder.Product.Domain.Entities
     {
         public long Id { get; set; }
 
-        public string Code { get; set; }
+        public string ProductId { get; set; } = null!;
 
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
-        public string StatusName { get; set; }
+        public bool Status { get; set; }
 
-        public double Stock { get; set; }
+        public long Stock { get; set; }
 
         public double Price { get; set; }
 

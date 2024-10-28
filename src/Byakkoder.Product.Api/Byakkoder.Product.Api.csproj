@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Byakkoder.Product.Application\Byakkoder.Product.Application.csproj" />
+    <ProjectReference Include="..\Byakkoder.Product.Infrastructure\Byakkoder.Product.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

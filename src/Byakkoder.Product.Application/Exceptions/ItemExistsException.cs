@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Byakkoder.Product.Application.Exceptions
 {
-    internal class ItemExistsException
+    public class ItemExistsException : Exception
     {
+        public ItemExistsException(string message) : base(message) { }
     }
 }
