@@ -1,5 +1,6 @@
 ﻿using Byakkoder.Product.Application.Exceptions;
 using Byakkoder.Product.Application.Interfaces;
+using Byakkoder.Product.Application.Models;
 using MediatR;
 
 namespace Byakkoder.Product.Application.Products.Queries.GetById
@@ -9,14 +10,18 @@ namespace Byakkoder.Product.Application.Products.Queries.GetById
         #region Fields
         
         private readonly IProductRepository _productRepository;
+        private readonly IDiscountApiService _discountApiService;
 
         #endregion
 
         #region Constructor
-        
-        public GetByIdQueryHandler(IProductRepository productRepository)
+
+        public GetByIdQueryHandler(
+            IProductRepository productRepository,
+            IDiscountApiService discountApiService)
         {
             _productRepository = productRepository;
+            _discountApiService = discountApiService;
         }
 
         #endregion
@@ -30,6 +35,9 @@ namespace Byakkoder.Product.Application.Products.Queries.GetById
             {
                 throw new NotFoundException($"A product with the id {request.Id} was not found.");
             }
+
+            DiscountDto discountDto = await _discountApiService.GetDiscountByProductId(product.ProductId);
+            product.Discount = discountDto != null ? discountDto.Discount : 0;
 
             return product;
         } 

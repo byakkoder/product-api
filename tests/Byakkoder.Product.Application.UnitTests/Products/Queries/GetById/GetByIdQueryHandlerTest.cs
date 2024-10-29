@@ -11,15 +11,17 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Queries.GetById
         
         private readonly GetByIdQueryHandler _getByIdQueryHandler = null!;
         private readonly Mock<IProductRepository> _productRepository = null!;
+        private readonly Mock<IDiscountApiService> _discountApiService = null!;
 
         #endregion
 
         #region Constructor
-        
+
         public GetByIdQueryHandlerTest()
         {
             _productRepository = new Mock<IProductRepository>();
-            _getByIdQueryHandler = new GetByIdQueryHandler(_productRepository.Object);
+            _discountApiService = new Mock<IDiscountApiService>();
+            _getByIdQueryHandler = new GetByIdQueryHandler(_productRepository.Object, _discountApiService.Object);
         }
 
         #endregion
@@ -36,9 +38,10 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Queries.GetById
                 Id = 1
             };
 
-            Domain.Entities.Product expectedProduct = new Domain.Entities.Product();
+            Domain.Entities.Product expectedProduct = new Domain.Entities.Product() { Id = 1, ProductId = "1" };
 
             _productRepository.Setup(pr => pr.GetById(getByIdQuery.Id)).ReturnsAsync(expectedProduct);
+            _discountApiService.Setup(ds => ds.GetDiscountByProductId("1")).ReturnsAsync(new Models.DiscountDto { Id = 1, Discount = 20 });
 
             #endregion
 
@@ -52,6 +55,8 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Queries.GetById
 
             Assert.NotNull(product);
             Assert.Equal(expectedProduct, product);
+            Assert.Equal(20, product.Discount);
+            _discountApiService.Verify(ds => ds.GetDiscountByProductId(expectedProduct.ProductId), Times.Once);
 
             #endregion
         }
@@ -74,6 +79,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Queries.GetById
             #region Act and Assert
 
             Assert.ThrowsAsync<NotFoundException>(() => _getByIdQueryHandler.Handle(getByIdQuery, default));
+            _discountApiService.Verify(ds => ds.GetDiscountByProductId(It.IsAny<string>()), Times.Never);
 
             #endregion
         } 
