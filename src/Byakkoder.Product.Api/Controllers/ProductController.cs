@@ -52,16 +52,16 @@ namespace Byakkoder.Product.Api.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, ProductDto productDto)
+        public async Task<IActionResult> Put(int id, UpdateProductDto updateProductDto)
         {
-            if (id != productDto.Id)
+            if (id != updateProductDto.Id)
             {
                 return BadRequest("Product id and url id doesn't match.");
             }
 
             try
             {
-                await _productHandler.Update(productDto);
+                await _productHandler.Update(updateProductDto);
 
                 return NoContent();
             }

@@ -12,6 +12,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Update
         
         private readonly UpdateCommandHandler _updateCommandHandler = null!;
         private readonly Mock<IProductRepository> _productRepository = null!;
+        private readonly Mock<IProductStatusService> _productStatusService;
         private readonly Mock<IMapper> _mapper = null!;
 
         #endregion
@@ -21,8 +22,9 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Update
         public UpdateCommandHandlerTest()
         {
             _productRepository = new Mock<IProductRepository>();
+            _productStatusService = new Mock<IProductStatusService>();
             _mapper = new Mock<IMapper>();
-            _updateCommandHandler = new UpdateCommandHandler(_productRepository.Object, _mapper.Object);
+            _updateCommandHandler = new UpdateCommandHandler(_productRepository.Object, _productStatusService.Object, _mapper.Object);
         }
 
         #endregion
@@ -108,7 +110,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Update
                 ProductId = "1",
                 Name = "Super Gaming PC",
                 Description = "Description",
-                Status = true,
+                StatusName = "Active",
                 Stock = 30,
                 Price = 500
             };

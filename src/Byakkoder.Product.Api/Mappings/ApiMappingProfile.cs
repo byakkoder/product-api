@@ -10,7 +10,7 @@ namespace Byakkoder.Product.Api.Mappings
         public ApiMappingProfile() 
         {
             CreateMap<ProductDto, InsertCommand>();
-            CreateMap<ProductDto, UpdateCommand>();
+            CreateMap<UpdateProductDto, UpdateCommand>();
             CreateMap<Application.Models.ProductDto, ProductDto>().ReverseMap();
         }
     }

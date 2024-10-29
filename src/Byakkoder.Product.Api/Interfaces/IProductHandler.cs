@@ -6,6 +6,6 @@ namespace Byakkoder.Product.Api.Interfaces
     {
         Task<ProductDto> GetById(long id);
         Task<ProductDto> Insert(ProductDto productDto);
-        Task Update(ProductDto productDto);
+        Task Update(UpdateProductDto updateProductDto);
     }
 }

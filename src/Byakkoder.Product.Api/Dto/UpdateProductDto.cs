@@ -1,11 +1,7 @@
-﻿using MediatR;
-
-namespace Byakkoder.Product.Application.Products.Commands.Update
+﻿namespace Byakkoder.Product.Api.Dto
 {
-    public class UpdateCommand : IRequest<Unit>
+    public class UpdateProductDto
     {
-        #region Properties
-        
         public long Id { get; set; }
 
         public string ProductId { get; set; } = null!;
@@ -18,8 +14,6 @@ namespace Byakkoder.Product.Application.Products.Commands.Update
 
         public long Stock { get; set; }
 
-        public double Price { get; set; } 
-
-        #endregion
+        public double Price { get; set; }
     }
 }

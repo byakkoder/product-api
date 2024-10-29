@@ -39,9 +39,9 @@ namespace Byakkoder.Product.Api.Handlers
             return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task Update(ProductDto productDto)
+        public async Task Update(UpdateProductDto updateProductDto)
         {
-            UpdateCommand updateCommand = _mapper.Map<UpdateCommand>(productDto);
+            UpdateCommand updateCommand = _mapper.Map<UpdateCommand>(updateProductDto);
 
             await _mediator.Send(updateCommand);
         }
