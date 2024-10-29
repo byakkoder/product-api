@@ -1,11 +1,4 @@
-﻿using Byakkoder.Product.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Byakkoder.Product.Application.Interfaces
+﻿namespace Byakkoder.Product.Application.Interfaces
 {
     public interface IProductRepository
     {

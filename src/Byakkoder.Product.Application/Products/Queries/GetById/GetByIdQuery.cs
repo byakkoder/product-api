@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Byakkoder.Product.Application.Models;
+using MediatR;
 
 namespace Byakkoder.Product.Application.Products.Queries.GetById
 {
-    public class GetByIdQuery : IRequest<Domain.Entities.Product>
+    public class GetByIdQuery : IRequest<ProductDto>
     {
         #region Properties
         

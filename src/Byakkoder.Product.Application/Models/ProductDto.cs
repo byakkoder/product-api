@@ -1,4 +1,4 @@
-﻿namespace Byakkoder.Product.Api.Dto
+﻿namespace Byakkoder.Product.Application.Models
 {
     public class ProductDto
     {

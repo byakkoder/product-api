@@ -2,6 +2,7 @@
 using Byakkoder.Product.Infrastructure.Data;
 using Byakkoder.Product.Infrastructure.Data.Repositories;
 using Byakkoder.Product.Infrastructure.ExternalDiscountApi.Services;
+using Byakkoder.Product.Infrastructure.ProductStatus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +18,10 @@ namespace Byakkoder.Product.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IDiscountApiService, DiscountApiService>();
+            services.AddScoped<IProductStatusService, ProductStatusService>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddHttpClient();
+            services.AddMemoryCache();
 
             return services;
         }

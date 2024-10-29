@@ -25,7 +25,7 @@ namespace Byakkoder.Product.Api.Handlers
         {
             GetByIdQuery getByIdQuery = new GetByIdQuery() { Id = id };
 
-            Domain.Entities.Product product = await _mediator.Send(getByIdQuery);
+            Application.Models.ProductDto product = await _mediator.Send(getByIdQuery);
 
             return _mapper.Map<ProductDto>(product);
         }

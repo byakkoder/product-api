@@ -11,7 +11,7 @@ namespace Byakkoder.Product.Api.Mappings
         {
             CreateMap<ProductDto, InsertCommand>();
             CreateMap<ProductDto, UpdateCommand>();
-            CreateMap<Domain.Entities.Product, ProductDto>().ReverseMap();
+            CreateMap<Application.Models.ProductDto, ProductDto>().ReverseMap();
         }
     }
 }

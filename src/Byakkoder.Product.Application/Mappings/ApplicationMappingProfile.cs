@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
+using Byakkoder.Product.Application.Models;
 using Byakkoder.Product.Application.Products.Commands.Insert;
 using Byakkoder.Product.Application.Products.Commands.Update;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Byakkoder.Product.Application.Mappings
 {
@@ -15,6 +11,7 @@ namespace Byakkoder.Product.Application.Mappings
         {
             CreateMap<InsertCommand, Domain.Entities.Product>();
             CreateMap<UpdateCommand, Domain.Entities.Product>();
+            CreateMap<Domain.Entities.Product, ProductDto>();
         }
     }
 }
