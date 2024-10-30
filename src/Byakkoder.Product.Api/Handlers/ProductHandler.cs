@@ -30,13 +30,13 @@ namespace Byakkoder.Product.Api.Handlers
             return _mapper.Map<ProductDto>(product);
         }
 
-        public async Task<ProductDto> Insert(ProductDto productDto)
+        public async Task<BasicProductDto> Insert(CreateProductDto createProductDto)
         {
-            InsertCommand insertCommand = _mapper.Map<InsertCommand>(productDto);
+            InsertCommand insertCommand = _mapper.Map<InsertCommand>(createProductDto);
 
-            Domain.Entities.Product product = await _mediator.Send(insertCommand);
+            Application.Models.ProductDto product = await _mediator.Send(insertCommand);
 
-            return _mapper.Map<ProductDto>(product);
+            return _mapper.Map<BasicProductDto>(product);
         }
 
         public async Task Update(UpdateProductDto updateProductDto)

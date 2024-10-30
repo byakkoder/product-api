@@ -12,6 +12,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Insert
         
         private readonly InsertCommandHandler _insertCommandHandler = null!;
         private readonly Mock<IProductRepository> _productRepository = null!;
+        private readonly Mock<IProductStatusService> _productStatusService = null!;
         private readonly Mock<IMapper> _mapper = null!;
 
         #endregion
@@ -21,8 +22,9 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Insert
         public InsertCommandHandlerTest()
         {
             _productRepository = new Mock<IProductRepository>();
+            _productStatusService = new Mock<IProductStatusService>();
             _mapper = new Mock<IMapper>();
-            _insertCommandHandler = new InsertCommandHandler(_productRepository.Object, _mapper.Object);
+            _insertCommandHandler = new InsertCommandHandler(_productRepository.Object, _productStatusService.Object, _mapper.Object);
         }
 
         #endregion
@@ -37,19 +39,20 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Insert
             InsertCommand command = BuildTestInsertCommand();
 
             _mapper.Setup(m => m.Map<Domain.Entities.Product>(command)).Returns(new Domain.Entities.Product());
+            _mapper.Setup(m => m.Map<Models.ProductDto>(It.IsAny<Domain.Entities.Product>())).Returns(new Models.ProductDto());
 
             #endregion
 
             #region Act
 
-            Domain.Entities.Product product = await _insertCommandHandler.Handle(command, default);
+            Models.ProductDto product = await _insertCommandHandler.Handle(command, default);
 
             #endregion
 
             #region Assert
 
             Assert.NotNull(product);
-            _productRepository.Verify(pr => pr.Create(product), Times.Once);
+            _productRepository.Verify(pr => pr.Create(It.IsAny<Domain.Entities.Product>()), Times.Once);
 
             #endregion
         }
@@ -88,7 +91,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Insert
                 ProductId = id.ToString(),
                 Name = "Super Gaming PC",
                 Description = "Description",
-                Status = true,
+                StatusName = "Active",
                 Stock = 30,
                 Price = 500
             };

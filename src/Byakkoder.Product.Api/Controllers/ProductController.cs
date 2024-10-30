@@ -36,11 +36,11 @@ namespace Byakkoder.Product.Api.Controllers
 
         // POST api/<ProductController>
         [HttpPost]
-        public async Task<IActionResult> Post(ProductDto productDto)
+        public async Task<IActionResult> Post(CreateProductDto createProductDto)
         {
             try
             {
-                ProductDto createdProductDto = await _productHandler.Insert(productDto);
+                BasicProductDto createdProductDto = await _productHandler.Insert(createProductDto);
 
                 return CreatedAtAction(nameof(Get), new { id = createdProductDto.Id }, createdProductDto);
             }

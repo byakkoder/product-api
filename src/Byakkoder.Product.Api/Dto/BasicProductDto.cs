@@ -1,11 +1,9 @@
-﻿using MediatR;
-
-namespace Byakkoder.Product.Application.Products.Commands.Insert
+﻿namespace Byakkoder.Product.Api.Dto
 {
-    public class InsertCommand : IRequest<Application.Models.ProductDto>
+    public class BasicProductDto
     {
-        #region Properties
-        
+        public long Id { get; set; }
+
         public string ProductId { get; set; } = null!;
 
         public string Name { get; set; } = null!;
@@ -16,8 +14,6 @@ namespace Byakkoder.Product.Application.Products.Commands.Insert
 
         public long Stock { get; set; }
 
-        public double Price { get; set; } 
-
-        #endregion
+        public double Price { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace Byakkoder.Product.Api.Interfaces
     public interface IProductHandler
     {
         Task<ProductDto> GetById(long id);
-        Task<ProductDto> Insert(ProductDto productDto);
+        Task<BasicProductDto> Insert(CreateProductDto createProductDto);
         Task Update(UpdateProductDto updateProductDto);
     }
 }
