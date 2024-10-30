@@ -39,6 +39,11 @@ namespace Byakkoder.Product.Api.Controllers
 
         #region Endpoints
 
+        /// <summary>
+        /// Get a product by its internal id.
+        /// </summary>
+        /// <param name="id">Internal identifier of the product (record id).</param>
+        /// <returns>Product wit detailed information like discount and final price.</returns>
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -60,6 +65,11 @@ namespace Byakkoder.Product.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Create a product with its mandatory fields.
+        /// </summary>
+        /// <param name="createProductDto">Product to create.</param>
+        /// <returns>Created product with its internal id.</returns>
         // POST api/<ProductController>
         [HttpPost]
         public async Task<IActionResult> Post(CreateProductDto createProductDto)
@@ -81,6 +91,12 @@ namespace Byakkoder.Product.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Updates the information for a product.
+        /// </summary>
+        /// <param name="id">Product internal id.</param>
+        /// <param name="updateProductDto">Product to update.</param>
+        /// <returns>Successfull operation.</returns>
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, UpdateProductDto updateProductDto)
