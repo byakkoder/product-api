@@ -11,12 +11,28 @@ namespace Byakkoder.Product.Api.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        #region Fields
+        
         private readonly IProductHandler _productHandler;
 
+        #endregion
+
+        #region Constants
+        
+        private const string InternalErrorMessage = "An internal error has ocurred. Contact Administrator for details.";
+
+        #endregion
+
+        #region Constructor
+        
         public ProductController(IProductHandler productHandler)
         {
             _productHandler = productHandler;
         }
+
+        #endregion
+
+        #region Endpoints
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
@@ -31,6 +47,10 @@ namespace Byakkoder.Product.Api.Controllers
             catch (NotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalErrorMessage);
             }
         }
 
@@ -47,6 +67,10 @@ namespace Byakkoder.Product.Api.Controllers
             catch (ItemExistsException ex)
             {
                 return Conflict(ex.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalErrorMessage);
             }
         }
 
@@ -73,6 +97,12 @@ namespace Byakkoder.Product.Api.Controllers
             {
                 return Conflict(ex.Message);
             }
-        }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, InternalErrorMessage);
+            }
+        } 
+
+        #endregion
     }
 }
