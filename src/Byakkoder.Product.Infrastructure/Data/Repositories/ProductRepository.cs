@@ -6,9 +6,15 @@ namespace Byakkoder.Product.Infrastructure.Data.Repositories
 {
     public class ProductRepository : IProductRepository
     {
+        #region Fields
+        
         private readonly ProductManagementContext _productManagementContext;
         private readonly IMapper _mapper;
 
+        #endregion
+
+        #region Constructor
+        
         public ProductRepository(
             ProductManagementContext productManagementContext,
             IMapper mapper)
@@ -17,6 +23,10 @@ namespace Byakkoder.Product.Infrastructure.Data.Repositories
             _mapper = mapper;
         }
 
+        #endregion
+
+        #region Public Methods
+        
         public async Task Create(Domain.Entities.Product product)
         {
             Data.Entities.Product productToCreate = _mapper.Map<Data.Entities.Product>(product);
@@ -49,6 +59,8 @@ namespace Byakkoder.Product.Infrastructure.Data.Repositories
             _productManagementContext.Entry(existingProduct).CurrentValues.SetValues(updatedProduct);
 
             await _productManagementContext.SaveChangesAsync();
-        }
+        } 
+
+        #endregion
     }
 }

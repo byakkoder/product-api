@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Byakkoder.Product.Infrastructure.Data.Entities;
+﻿namespace Byakkoder.Product.Infrastructure.Data.Entities;
 
 public partial class Product
 {

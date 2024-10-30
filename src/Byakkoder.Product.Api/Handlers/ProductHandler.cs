@@ -10,9 +10,15 @@ namespace Byakkoder.Product.Api.Handlers
 {
     public class ProductHandler : IProductHandler
     {
+        #region Fields
+        
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
+        #endregion
+
+        #region Constructor
+        
         public ProductHandler(
             IMediator mediator,
             IMapper mapper)
@@ -21,6 +27,10 @@ namespace Byakkoder.Product.Api.Handlers
             _mapper = mapper;
         }
 
+        #endregion
+
+        #region Public Methods
+        
         public async Task<ProductDto> GetById(long id)
         {
             GetByIdQuery getByIdQuery = new GetByIdQuery() { Id = id };
@@ -44,6 +54,8 @@ namespace Byakkoder.Product.Api.Handlers
             UpdateCommand updateCommand = _mapper.Map<UpdateCommand>(updateProductDto);
 
             await _mediator.Send(updateCommand);
-        }
+        } 
+
+        #endregion
     }
 }
