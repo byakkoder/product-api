@@ -1,6 +1,7 @@
 using Byakkoder.Product.Api;
 using Byakkoder.Product.Application;
 using Byakkoder.Product.Infrastructure;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);
 builder.Services.AddWebApiLayer();
+
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+{
+    loggerConfiguration
+        .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+        .Enrich.FromLogContext()
+        .ReadFrom.Configuration(hostingContext.Configuration);
+});
 
 var app = builder.Build();
 
