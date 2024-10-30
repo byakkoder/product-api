@@ -14,20 +14,25 @@ namespace Byakkoder.Product.Api.Controllers
         #region Fields
         
         private readonly IProductHandler _productHandler;
+        private readonly ILogger<ProductController> _logger;
 
         #endregion
 
         #region Constants
-        
+
         private const string InternalErrorMessage = "An internal error has ocurred. Contact Administrator for details.";
+        private const string DetailsErrorMessage = "An internal error has ocurred: {0}";
 
         #endregion
 
         #region Constructor
-        
-        public ProductController(IProductHandler productHandler)
+
+        public ProductController(
+            IProductHandler productHandler,
+            ILogger<ProductController> logger)
         {
             _productHandler = productHandler;
+            _logger = logger;
         }
 
         #endregion
@@ -48,8 +53,9 @@ namespace Byakkoder.Product.Api.Controllers
             {
                 return NotFound(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(DetailsErrorMessage, ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, InternalErrorMessage);
             }
         }
@@ -68,8 +74,9 @@ namespace Byakkoder.Product.Api.Controllers
             {
                 return Conflict(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(DetailsErrorMessage, ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, InternalErrorMessage);
             }
         }
@@ -97,8 +104,9 @@ namespace Byakkoder.Product.Api.Controllers
             {
                 return Conflict(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(DetailsErrorMessage, ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, InternalErrorMessage);
             }
         } 
