@@ -75,6 +75,7 @@ Enables you to update a product. Only mandatory product information is included.
 
 - Visual Studio 2022 or later.
 - .NET 8
+- Microsoft SQL Server (developed and tested with version 2022 RTM Developer Edition). 
 - Git
 
 To run the Product Web Api in a development environment, follow these steps:
