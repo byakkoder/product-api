@@ -98,7 +98,14 @@ To run the Product Web Api in a development environment, follow these steps:
 ```
 
 6. Set `Byakkoder.Product.Api` as the startup project and run the solution.
-7. Swagger documentation will automatically open in a browser for interacting with the Web API.
+7. Swagger documentation will automatically open in a browser for interacting with the Web Api.
+
+
+## Logging
+
+For log management, Serilog is used and the logs are registered in a plain text file in the `Byakkoder.Product.Api/Logs` folder with the notation `log-YYYYMMDD.txt`. The endpoints response time and the exceptions are logged.
+
+***NOTE***: For security reasons, internal exceptions are not shown to Web Api users but are recorded in the log. Only the business and Web request exceptions are shown to the Web Api users.
 
 
 ## Maintenance of Database Entities
