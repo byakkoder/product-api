@@ -40,6 +40,12 @@ namespace Byakkoder.Product.Application.Products.Commands.Insert
                 throw new ItemExistsException("A product with the same name currently exists.");
             }
 
+            product = await _productRepository.GetByProductId(request.ProductId);
+            if (product != null)
+            {
+                throw new ItemExistsException("A product with the same ProductId currently exists.");
+            }
+
             product = _mapper.Map<Domain.Entities.Product>(request);
 
             Dictionary<int, string> productsDict = _productStatusService.GetProductStatusDict();

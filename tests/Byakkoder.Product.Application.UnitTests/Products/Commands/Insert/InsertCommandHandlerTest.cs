@@ -61,7 +61,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Insert
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
-        public void Handle_InsertFailed_ProductExists_Test(long id)
+        public async void Handle_InsertFailed_ProductNameExists_Test(long id)
         {
             #region Arrange
 
@@ -73,7 +73,31 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Insert
 
             #region Act and Assert
 
-            Assert.ThrowsAsync<ItemExistsException>(() => _insertCommandHandler.Handle(command, default));
+            await Assert.ThrowsAsync<ItemExistsException>(() => _insertCommandHandler.Handle(command, default));
+            _mapper.Verify(m => m.Map<Domain.Entities.Product>(command), Times.Never);
+            _productRepository.Verify(pr => pr.Create(It.IsAny<Domain.Entities.Product>()), Times.Never);
+
+            #endregion
+        }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("3")]
+        public async void Handle_InsertFailed_ProductIdExists_Test(string productId)
+        {
+            #region Arrange
+
+            InsertCommand command = BuildTestInsertCommand();
+            command.ProductId = productId;
+
+            _productRepository.Setup(pr => pr.GetByProductId(command.ProductId)).ReturnsAsync(new Domain.Entities.Product());
+
+            #endregion
+
+            #region Act and Assert
+
+            await Assert.ThrowsAsync<ItemExistsException>(() => _insertCommandHandler.Handle(command, default));
             _mapper.Verify(m => m.Map<Domain.Entities.Product>(command), Times.Never);
             _productRepository.Verify(pr => pr.Create(It.IsAny<Domain.Entities.Product>()), Times.Never);
 
@@ -83,7 +107,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Insert
         #endregion
 
         #region Private Test Methods
-        
+
         private InsertCommand BuildTestInsertCommand(long id = 1)
         {
             return new InsertCommand()

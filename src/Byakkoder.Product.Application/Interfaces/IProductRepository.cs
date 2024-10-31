@@ -1,4 +1,5 @@
-﻿namespace Byakkoder.Product.Application.Interfaces
+﻿
+namespace Byakkoder.Product.Application.Interfaces
 {
     public interface IProductRepository
     {
@@ -9,5 +10,6 @@
         Task Create(Domain.Entities.Product product);
 
         Task Update(Domain.Entities.Product product);
+        Task<Domain.Entities.Product> GetByProductId(string productId);
     }
 }

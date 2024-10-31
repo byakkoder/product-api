@@ -45,6 +45,12 @@ namespace Byakkoder.Product.Application.Products.Commands.Update
                 throw new ItemExistsException($"A product with the name {request.Name} currently exists.");
             }
 
+            product = await _productRepository.GetByProductId(request.ProductId);
+            if (product != null && product.Id != request.Id)
+            {
+                throw new ItemExistsException($"A product with the ProductId {request.ProductId} currently exists.");
+            }
+
             product = _mapper.Map<Domain.Entities.Product>(request);
 
             Dictionary<int, string> productsDict = _productStatusService.GetProductStatusDict();

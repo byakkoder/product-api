@@ -60,7 +60,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Update
         [InlineData(1)]
         [InlineData(2)]
         [InlineData(3)]
-        public void Handle_UpdateFailed_ProductNotFound_Test(long id)
+        public async void Handle_UpdateFailed_ProductNotFound_Test(long id)
         {
             #region Arrange
 
@@ -70,7 +70,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Update
 
             #region Act and Assert
 
-            Assert.ThrowsAsync<NotFoundException>(() => _updateCommandHandler.Handle(command, default));
+            await Assert.ThrowsAsync<NotFoundException>(() => _updateCommandHandler.Handle(command, default));
             _mapper.Verify(m => m.Map<Domain.Entities.Product>(command), Times.Never);
             _productRepository.Verify(pr => pr.Create(It.IsAny<Domain.Entities.Product>()), Times.Never);
 
@@ -78,20 +78,49 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Update
         }
 
         [Theory]
-        [InlineData(1)]
-        [InlineData(2)]
-        [InlineData(3)]
-        public void Handle_UpdateFailed_ProductExists_Test(long id)
+        [InlineData("Product 1")]
+        [InlineData("Product 2")]
+        [InlineData("Product 3")]
+        public async void Handle_UpdateFailed_ProductNameExists_Test(string name)
         {
             #region Arrange
 
-            UpdateCommand command = BuildTestUpdateCommand(id);
+            UpdateCommand command = BuildTestUpdateCommand();
+            command.Name = name;
+
+            _productRepository.Setup(pr => pr.GetById(It.IsAny<long>())).ReturnsAsync(new Domain.Entities.Product());
+            _productRepository.Setup(pr => pr.GetByName(command.Name)).ReturnsAsync(new Domain.Entities.Product());
 
             #endregion
 
             #region Act and Assert
 
-            Assert.ThrowsAsync<ItemExistsException>(() => _updateCommandHandler.Handle(command, default));
+            await Assert.ThrowsAsync<ItemExistsException>(() => _updateCommandHandler.Handle(command, default));
+            _mapper.Verify(m => m.Map<Domain.Entities.Product>(command), Times.Never);
+            _productRepository.Verify(pr => pr.Create(It.IsAny<Domain.Entities.Product>()), Times.Never);
+
+            #endregion
+        }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("2")]
+        [InlineData("3")]
+        public async void Handle_UpdateFailed_ProductIdExists_Test(string productId)
+        {
+            #region Arrange
+
+            UpdateCommand command = BuildTestUpdateCommand();
+            command.ProductId = productId;
+
+            _productRepository.Setup(pr => pr.GetById(It.IsAny<long>())).ReturnsAsync(new Domain.Entities.Product());
+            _productRepository.Setup(pr => pr.GetByProductId(command.ProductId)).ReturnsAsync(new Domain.Entities.Product());
+
+            #endregion
+
+            #region Act and Assert
+
+            await Assert.ThrowsAsync<ItemExistsException>(() => _updateCommandHandler.Handle(command, default));
             _mapper.Verify(m => m.Map<Domain.Entities.Product>(command), Times.Never);
             _productRepository.Verify(pr => pr.Create(It.IsAny<Domain.Entities.Product>()), Times.Never);
 
@@ -101,7 +130,7 @@ namespace Byakkoder.Product.Application.UnitTests.Products.Commands.Update
         #endregion
 
         #region Private Test Methods
-        
+
         private UpdateCommand BuildTestUpdateCommand(long id = 1)
         {
             return new UpdateCommand()

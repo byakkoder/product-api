@@ -45,6 +45,13 @@ namespace Byakkoder.Product.Infrastructure.Data.Repositories
             return _mapper.Map<Domain.Entities.Product>(product);
         }
 
+        public async Task<Domain.Entities.Product> GetByProductId(string productId)
+        {
+            Data.Entities.Product product = await _productManagementContext.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+
+            return _mapper.Map<Domain.Entities.Product>(product);
+        }
+
         public async Task<Domain.Entities.Product> GetByName(string name)
         {
             Data.Entities.Product product = await _productManagementContext.Products.FirstOrDefaultAsync(p => p.Name == name);
