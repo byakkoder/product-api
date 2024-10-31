@@ -17,7 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Byakkoder.Product.Domain.Un
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Byakkoder.Product.Application.UnitTests", "tests\Byakkoder.Product.Application.UnitTests\Byakkoder.Product.Application.UnitTests.csproj", "{B40D7AF9-A4EC-4120-981E-7BDF31D1D9D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Byakkoder.Product.Infrastructure", "src\Byakkoder.Product.Infrastructure\Byakkoder.Product.Infrastructure.csproj", "{7827C1D8-1CAF-42BD-9375-8AEBFEE83685}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Byakkoder.Product.Infrastructure", "src\Byakkoder.Product.Infrastructure\Byakkoder.Product.Infrastructure.csproj", "{7827C1D8-1CAF-42BD-9375-8AEBFEE83685}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FD0A07BF-170C-48E0-B697-4F90FC5B85B1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
